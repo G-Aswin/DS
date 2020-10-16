@@ -7,11 +7,8 @@ typedef struct sparse
     int val;
 } S;
 
-
-
-int main()
+void accept(S sparse[])
 {
-    S sparse[20];
     int n, m, k = 1, ele;
 
     printf("\nEnter the array elements");
@@ -24,7 +21,7 @@ int main()
     {
         for (int j = 0; j < m; j++)
         {
-            printf("\nEnter ele at (%d,%d", i, j);
+            printf("\nEnter ele at (%d,%d) : ", i, j);
             scanf("%d", &ele);
 
             if (ele != 0)
@@ -41,11 +38,22 @@ int main()
     sparse[0].col = m;
     sparse[0].val = k - 1;
 
-    printf("\n The sparse matrix looks like : ");
+}
+
+void display(S sparse[])
+{
+    printf("\nThe sparse matrix looks like : ");
     for (int i = 1; i <= sparse[0].val; i++)
     {
-        printf("[%d,%d] is %d", sparse[i].row, sparse[i].col, sparse[i].val);
+        printf("\nElement at [%d,%d] is %d.", sparse[i].row, sparse[i].col, sparse[i].val);
     }
+}
+
+int main()
+{
+    S sparse[20];
+
+    accept(sparse);
 
     return 0;
 }
