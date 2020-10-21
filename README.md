@@ -25,3 +25,5 @@
 22. [MergeSorting Struct with Option](struct_sort.c)
 23. [Swapping Structures](swapstruct.c)
 24. [Test](test.c)
+25. [Stack implementation on structure](oct21.c)
+26. [Dynamic Array Stack](oct21-2.c)
