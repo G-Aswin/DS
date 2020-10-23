@@ -27,3 +27,4 @@
 24. [Test](test.c)
 25. [Stack implementation on structure](oct21.c)
 26. [Dynamic Array Stack](oct21-2.c)
+27. [Dynamic String Stack](dynamicstringstack.c)
