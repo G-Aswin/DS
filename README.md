@@ -27,4 +27,5 @@
 24. [Test](test.c)
 25. [Stack implementation on structure](oct21.c)
 26. [Dynamic Array Stack](oct21-2.c)
-27. [Find Palindrome using stack](palindromestack.c)
+27. [Find Palindrome using stack](oct23-2.c)
+28. [Linear static queue](oct23.c)
