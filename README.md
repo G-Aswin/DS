@@ -27,8 +27,14 @@
 24. [Test](test.c)
 25. [Stack implementation on structure](oct21.c)
 26. [Dynamic Array Stack](oct21-2.c)
+<<<<<<< HEAD
 27. [Find Palindrome using stack](oct23-2.c)
 28. [Linear static queue](oct23.c)
 29. [Convert INFIX to POSTFIX](oct30.c)
 30. [Evaluating a POSTFIX expression](nov02.c)
 31. [A Circular Queue](nov03.c)
+=======
+27. [Dynamic String Stack](dynamicstringstack.c)
+28. [Find Palindrome using stack](oct23-2.c)
+29. [Linear static queue](oct23.c)
+>>>>>>> 91111082050ed7ee00aaa7127699dba0a75a9c96
