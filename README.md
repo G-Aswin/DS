@@ -29,3 +29,6 @@
 26. [Dynamic Array Stack](oct21-2.c)
 27. [Find Palindrome using stack](oct23-2.c)
 28. [Linear static queue](oct23.c)
+29. [Convert INFIX to POSTFIX](oct30.c)
+30. [Evaluating a POSTFIX expression](nov02.c)
+31. [A Circular Queue](nov03.c)

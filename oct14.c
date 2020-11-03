@@ -116,7 +116,7 @@ int main()
     S sparse[20];
 
     accept(sparse);
-    display(sparse);
+    // display(sparse);
     display_as_array(sparse);
     transpose(sparse);
     printf("\n*******************\n");
