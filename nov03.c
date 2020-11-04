@@ -45,7 +45,7 @@ void display(int queue[], int front, int count)
 
 int main()
 {
-    int queue[MAX], front = 0, rear = -1, count = 0, ch;
+    int queue[MAX], front = 0, rear = MAX - 1, count = 0, ch;
     while (1)
     {
         printf("\n\n1.Enqueue\n2.Dequeue\n3.Display\nAnything else-> Exit\n");
