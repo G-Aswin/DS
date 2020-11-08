@@ -33,3 +33,4 @@
 30. [Evaluating a POSTFIX expression](nov02.c)
 31. [A Circular Queue](nov03.c)
 32. [Double ended queue](nov04.c)
+33. [Tower of Hanoi and Factorial](nov07.c)
