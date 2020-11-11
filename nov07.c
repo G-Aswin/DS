@@ -21,6 +21,9 @@ int factorial(int n)
 
 int main()
 {
-    // towerofhanoi(3, 'A', 'B', 'C');
-    printf("Factorial of %d is %d.\n", 5, factorial(5));
+    int n;
+    printf("\nEnter number of discs : ");
+    scanf("%d", &n);
+    towerofhanoi(n, 'A', 'B', 'C');
+    // printf("Factorial of %d is %d.\n", n, factorial(n));
 }

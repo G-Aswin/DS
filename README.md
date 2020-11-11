@@ -34,3 +34,5 @@
 31. [A Circular Queue](nov03.c)
 32. [Double ended queue](nov04.c)
 33. [Tower of Hanoi and Factorial](nov07.c)
+34. [GCD and Fibonacci Series](nov09.c)
+35. [Multiple Stacks](nov10.c)
