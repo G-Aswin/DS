@@ -119,7 +119,7 @@ int main()
 
     infix_to_postfix(postfix_expression, infix_expression);
 
-    printf("\n\nThe resultant postfix expression is : %s", postfix_expression);
+    printf("\n\nThe resultant postfix expression is : %s\n", postfix_expression);
 
     return 0;
 }
