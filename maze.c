@@ -50,12 +50,17 @@ void print_matrix(int matrix[SIZE][SIZE])
 
 int main()
 {
-    printf("\nThe maze is : \n");
-    print_matrix(maze);
+    printf("Enter the matrix \n");
+    for (int i = 0; i < SIZE; i++)
+    {
+        for (int j = 0; j < SIZE; j++)
+        {
+            scanf("%d", &maze[i][j]);
+        }
+    }
 
+    printf("The solution is : \n");
     solve_maze(0, 0);
-
-    printf("\nThe answer matrix is : \n");
     print_matrix(solution);
     return 0;
 }
