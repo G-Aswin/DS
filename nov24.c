@@ -103,8 +103,12 @@ NODE delete_from_rear(NODE first)
     return first;
 }
 
-void search(NODE first, int key)
+void search(NODE first)
 {
+    int key;
+    printf("Enter the key :");
+    scanf("%d", &key);
+    
     NODE curr = first;
     while (curr != NULL)
     {
@@ -117,6 +121,15 @@ void search(NODE first, int key)
     }
     printf("The target was not found!\n");
     return;
+}
+
+NODE join_sll(NODE first, NODE second)
+{
+    NODE curr = first;
+    while(curr->link != NULL)
+        curr = curr->link;
+    curr->link = second;
+    return first;
 }
 
 void display(NODE first)
@@ -138,12 +151,12 @@ void display(NODE first)
 
 int main()
 {
-    NODE first = NULL;
-    int ch = 0, key;
+    NODE first = NULL, second = NULL;
+    int ch = 0;
     while (1)
     {
-        printf("1.Insert Front\n2. Insert Rear\n3. Display\n");
-        printf("4. Delete Front\n5.Delete Rear\n6.Search\n7.Exit\n");
+        printf("\n\n1.Insert Front\n2. Insert Rear\n3. Display\n");
+        printf("4. Delete Front\n5. Delete Rear\n6. Search\n7. Exit\n8. Insert into front of second\n9. Join first second\n");
         printf("\nEnter your choice : ");
         scanf("%d", &ch);
 
@@ -151,13 +164,12 @@ int main()
         {
             case 1: first = insert_into_front(first);   break;
             case 2: first = insert_into_rear(first);    break;
-            case 3: display(first);     break;
+            case 3: display(first);                     break;
             case 4: first = delete_from_front(first);   break;
             case 5: first = delete_from_rear(first);    break;
-            case 6: printf("Enter the key :");
-                    scanf("%d", &key);
-                    search(first, key);
-                    break;
+            case 6: search(first);                 break;
+            case 8: second = insert_into_front(second);  break;
+            case 9: first = join_sll(first, second);    break;
             default: return 0;
         }
     }
