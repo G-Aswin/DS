@@ -24,6 +24,34 @@ NODE getnode()
     return x;
 }
 
+NODE insert_into_front_direct(NODE first, int x)
+{
+    NODE new = getnode();
+    new->info = x;
+    new->link = first;
+    first = new;
+    return first;
+}
+
+NODE insert_into_rear_direct(NODE first, int x)
+{
+    NODE new = getnode();
+    new->info = x;
+    new->link = NULL;
+    NODE curr = first;
+
+    if (first == NULL) //empty SLL
+        first = new;
+    else
+    {
+        curr = first;
+        while(curr->link != NULL)
+            curr = curr->link;
+        curr->link = new;
+    }
+    return first;
+}
+
 
 NODE insert_into_front(NODE first)
 {
@@ -137,6 +165,48 @@ NODE join_sll(NODE first, NODE second)
     return first;
 }
 
+int length_sll(NODE first)
+{
+    int size = 0;
+    NODE curr = first;
+    while(curr != NULL)
+    {
+        size++;
+        curr = curr->link;
+    }
+    return size;
+}
+
+NODE insert_at(NODE first)
+{
+    int x, idx;
+    printf("Enter the value and location respectively : ");
+    scanf("%d %d", &x, &idx);
+
+    int n = length_sll(first);
+    if (idx < 0 || idx > n)
+    {
+        printf("Invalid IDX!\n");
+        return first;
+    }
+
+    NODE node = getnode();
+    node->info = x;
+    node->link = NULL;
+
+    if (idx == 0)
+        return insert_into_front_direct(first, x);
+    else
+    {
+        NODE curr = first;
+        while (--idx)
+            curr = curr->link;
+        node->link = curr->link;
+        curr->link = node;
+    }
+    return first;
+}
+
 void display(NODE first)
 {
     if (first == NULL)
@@ -162,7 +232,7 @@ int main()
     {
         printf("\n\n1.Insert Front\n2. Insert Rear\n3. Display\n");
         printf("4. Delete Front\n5. Delete Rear\n6. Search\n7. Exit\n");
-        // printf("8. Insert into front of second\n9.Join SLL\n\n");
+        printf("8. Insert into specific pos\n9.Join SLL\n\n");
         printf("\nEnter your choice : ");
         scanf("%d", &ch);
 
@@ -174,7 +244,7 @@ int main()
             case 4: first = delete_from_front(first);   break;
             case 5: first = delete_from_rear(first);    break;
             case 6: search(first);                 break;
-            case 8: second = insert_into_front(second);  break;
+            case 8: first = insert_at(first);  break;
             case 9: first = join_sll(first, second);    break;
             default: return 0;
         }
