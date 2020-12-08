@@ -40,3 +40,4 @@
 37. [Maze Problem](maze.c)
 38. [Ackermann Function](nov19.c)
 39. [Singly Linked List Skeleton](nov24.c)
+40. [SLL with different struct](dec08.c)

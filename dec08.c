@@ -1,11 +1,13 @@
-// Linked list skeleton
+// Linked list with modified struct
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 struct node
 {
-    int info;
+    char name[20];
+    float sal;
     struct node *link;
 };
 
@@ -27,12 +29,17 @@ NODE getnode()
 
 NODE insert_into_front(NODE first)
 {
-    int x;
-    printf("Enter the number to be inserted : ");
-    scanf("%d", &x);
+    char name[20];
+    float sal;
+    printf("Enter the name : ");
+    scanf("%s", name);
+    printf("Enter sal : ");
+    scanf("%f", &sal);
 
     NODE new = getnode();
-    new->info = x;
+    strcpy(new->name, name);
+    new->sal = sal;
+
     new->link = first;
     first = new;
     return first;
@@ -40,13 +47,16 @@ NODE insert_into_front(NODE first)
 
 NODE insert_into_rear(NODE first)
 {
-    int x;
-    printf("Enter the number to be inserted : ");
-    scanf("%d", &x);
+    char name[20];
+    float sal;
+    printf("Enter the name : ");
+    scanf("%s", name);
+    printf("Enter sal : ");
+    scanf("%f", &sal);
 
     NODE new = getnode();
-    new->info = x;
-    new->link = NULL;
+    strcpy(new->name, name);
+    new->sal = sal;
     NODE curr = first;
 
     if (first == NULL) //empty SLL
@@ -69,7 +79,7 @@ NODE delete_from_front(NODE first)
         printf("The SLL is empty!\n");
         return first;
     }
-    printf("The value deleted is %d\n", first->info);
+    printf("The name deleted is %s\n", first->name);
     NODE node = first;
     first = first->link;
     free(node);
@@ -87,7 +97,7 @@ NODE delete_from_rear(NODE first)
     if (first->link == NULL)
     {
         NODE node = first;
-        printf("The value deleted is %d\n", node->info);
+        printf("The name deleted is %s\n", node->name);
         free(node);
         first = NULL;
         return first;
@@ -97,7 +107,7 @@ NODE delete_from_rear(NODE first)
     while (curr->link->link != NULL)
         curr = curr->link;
     NODE node = curr->link;
-    printf("The value deleted is %d\n", node->info);
+    printf("The name deleted is %s\n", node->name);
     curr->link = NULL;
     free(node);
     return first;
@@ -105,14 +115,14 @@ NODE delete_from_rear(NODE first)
 
 void search(NODE first)
 {
-    int key;
-    printf("Enter the key :");
-    scanf("%d", &key);
+    char name[20];
+    printf("Enter the name :");
+    scanf("%s", name);
     
     NODE curr = first;
     while (curr != NULL)
     {
-        if (curr->info == key)
+        if (strcmp(curr->name, name) == 0)
         {
             printf("Element found!\n");
             return;
@@ -148,7 +158,7 @@ void display(NODE first)
     NODE curr = first;
     while (curr != NULL)
     {
-        printf("%d\n", curr->info);
+        printf("%s - %f\n", curr->name, curr->sal);
         curr = curr->link;
     }
 }

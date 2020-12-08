@@ -1,123 +1,145 @@
+// Linked list skeleton
+
 #include <stdio.h>
-#include<stdlib.h>
+#include <stdlib.h>
+#include <string.h>
+
 struct node
 {
-    int info;
-    struct node * link; 
+    char name[20];
+    float sal;
+    struct node *link;
 };
-typedef struct node * NODE;
 
+typedef struct node *NODE;
+
+//allocate memory
 NODE getnode()
 {
-    NODE temp;
-    temp=(NODE)malloc(sizeof(struct node));
-    if(temp==NULL)
+    NODE x;
+    x = (NODE)malloc(sizeof(struct node));
+    if (x == NULL)
     {
-        printf("Mem not allocated");
+        printf("\nMemory was not allocated !");
         exit(0);
     }
-    // mem is allocated
-    return temp;
+    return x;
 }
 
-NODE insert_front(NODE first, int item)
+
+NODE insert_into_front(NODE first)
 {
-    NODE temp;
-    temp=getnode();
-    temp->info=item;
-    temp->link=first;
-    return temp;
-}
-NODE insert_rear(NODE first, int item)
-{
-    NODE temp,cur,prev;
-    if(first==NULL)
-    {
-        printf("there are no elel");
-        return first; // NULL
-    }
-    temp=getnode();
-    temp->info=item;
-    temp->link=first;
-    cur=first;
-    prev=NULL;
-    while(cur!=NULL)
-    {
-        prev=cur;
-        cur=cur->link;
-    }
-    prev->link=temp;
+    char name[20];
+    float sal;
+    printf("Enter the name : ");
+    scanf("%s", name);
+    printf("Enter sal : ");
+    scanf("%f", &sal);
+
+    NODE new = getnode();
+    strcpy(new->name, name);
+    new->sal = sal;
+
+    new->link = first;
+    first = new;
     return first;
 }
 
-NODE delete_front(NODE first)
+NODE insert_into_rear(NODE first)
 {
-    int elem;
-    NODE next;
-    if(first==NULL)
-    {
-        printf("no ele");
-        return first;
-    }
-    elem=first->info;
-    printf("elem deleted is %d",elem);
-    next=first->link;
-    free(first);
-    return next;
-}
+    char name[20];
+    float sal;
+    printf("Enter the name : ");
+    scanf("%s", name);
+    printf("Enter sal : ");
+    scanf("%f", &sal);
 
-NODE delete_rear(NODE first)
-{
-    NODE cur,prev;
-    int elem;
-    
-    if(first==NULL)// no elem
-    {
-        printf("no ele");
-        return first;
-    }
-    else if (first->link==NULL)// one Node in sll
-    {
-        elem=first->info;
-        printf("elem deleted is %d",elem);
-        free(first);
-        return NULL;
-    }
+    NODE new = getnode();
+    strcpy(new->name, name);
+    new->sal = sal;
+    NODE curr = first;
+
+    if (first == NULL) //empty SLL
+        first = new;
     else
     {
-        cur=first;
-        prev=NULL;
-        while(cur->link!=NULL)
-        {
-            prev=cur;
-            cur=cur->link;
-        }
-        elem=cur->info;
-        printf("elem deleted is %d",elem);
-        free(cur);
-        prev->link=NULL;
+        curr = first;
+        while(curr->link != NULL)
+            curr = curr->link;
+        curr->link = new;
+    }
+
+    return first;
+}
+
+NODE delete_from_front(NODE first)
+{
+    if (first == NULL)
+    {
+        printf("The SLL is empty!\n");
         return first;
     }
+    printf("The name deleted is %s\n", first->name);
+    NODE node = first;
+    first = first->link;
+    free(node);
+    return first;
 }
-void display(NODE first)
+
+NODE delete_from_rear(NODE first)
 {
-    NODE cur;
-    cur=first;
-    if(first==NULL)// no elem
+    if (first == NULL)
     {
-        printf("no ele");
-        return ;
+        printf("The SLL is empty!\n");
+        return first;
     }
-    printf("------elem of sll------\n");
-    while(cur!=NULL)
+
+    if (first->link == NULL)
     {
-        printf("%d\n",cur->info);
-        cur=cur->link;
+        NODE node = first;
+        printf("The name deleted is %s\n", node->name);
+        free(node);
+        first = NULL;
+        return first;
     }
+
+    NODE curr = first;
+    while (curr->link->link != NULL)
+        curr = curr->link;
+    NODE node = curr->link;
+    printf("The name deleted is %s\n", node->name);
+    curr->link = NULL;
+    free(node);
+    return first;
+}
+
+void search(NODE first)
+{
+    char name[20];
+    printf("Enter the name :");
+    scanf("%s", name);
+    
+    NODE curr = first;
+    while (curr != NULL)
+    {
+        if (strcmp(curr->name, name) == 0)
+        {
+            printf("Element found!\n");
+            return;
+        }
+        curr = curr->link;
+    }
+    printf("The target was not found!\n");
+    return;
 }
 
 NODE join_sll(NODE first, NODE second)
 {
+    if (first == NULL)
+    {
+        first = second;
+        return first;
+    }
     NODE curr = first;
     while(curr->link != NULL)
         curr = curr->link;
@@ -125,38 +147,47 @@ NODE join_sll(NODE first, NODE second)
     return first;
 }
 
+void display(NODE first)
+{
+    if (first == NULL)
+    {
+        printf("The LL is empty!\n");
+        return;
+    }
+    printf("The LL is : \n");
+    NODE curr = first;
+    while (curr != NULL)
+    {
+        printf("%s - %f\n", curr->name, curr->sal);
+        curr = curr->link;
+    }
+}
+
 
 int main()
 {
-    NODE first=NULL, second = NULL;
-    int item,ch;
-    while(1)
+    NODE first = NULL, second = NULL;
+    int ch = 0;
+    while (1)
     {
-        printf("1insert front  2 insert rear 3: 4 5display\n");
-        scanf("%d",&ch);
+        printf("\n\n1.Insert Front\n2. Insert Rear\n3. Display\n");
+        printf("4. Delete Front\n5. Delete Rear\n6. Search\n7. Exit\n");
+        // printf("8. Insert into front of second\n9.Join SLL\n\n");
+        printf("\nEnter your choice : ");
+        scanf("%d", &ch);
+
         switch(ch)
         {
-            case 1: printf("enter the item\n");
-                    scanf("%d",&item);
-                    first=insert_front(first,item);
-                    break;
-            case 2: printf("enter the item\n");
-                    scanf("%d",&item);
-                    first=insert_rear(first,item);
-                    break;
-            case 3: first=delete_front(first);
-                    break;
-                    
-            case 4: first=delete_rear(first);
-                    break;
-            case 5: display(first);
-                    break;
-            default: printf("not a valid option");
-                    exit(0);
-                    
+            case 1: first = insert_into_front(first);   break;
+            case 2: first = insert_into_rear(first);    break;
+            case 3: display(first);                     break;
+            case 4: first = delete_from_front(first);   break;
+            case 5: first = delete_from_rear(first);    break;
+            case 6: search(first);                 break;
+            case 8: second = insert_into_front(second);  break;
+            case 9: first = join_sll(first, second);    break;
+            default: return 0;
         }
     }
-    
-
     return 0;
 }
