@@ -207,6 +207,34 @@ NODE insert_at(NODE first)
     return first;
 }
 
+NODE delete_at(NODE first)
+{
+    int idx;
+    printf("Enter the location respectively : ");
+    scanf("%d", &idx);
+
+    int n = length_sll(first);
+    if (idx < 0 || idx >= n)
+    {
+        printf("Invalid IDX!\n");
+        return first;
+    }
+
+    if (idx == 0)
+        return delete_from_front(first);
+    
+    NODE curr = first;
+    while (--idx)
+        curr = curr->link;
+
+    NODE node = curr->link;
+    curr->link = node->link;
+    free(node);
+
+    return first;
+}
+
+
 void display(NODE first)
 {
     if (first == NULL)
@@ -232,7 +260,7 @@ int main()
     {
         printf("\n\n1.Insert Front\n2. Insert Rear\n3. Display\n");
         printf("4. Delete Front\n5. Delete Rear\n6. Search\n7. Exit\n");
-        printf("8. Insert into specific pos\n9.Join SLL\n\n");
+        printf("8. Insert into specific pos\n9.Delete at\n\n");
         printf("\nEnter your choice : ");
         scanf("%d", &ch);
 
@@ -243,9 +271,10 @@ int main()
             case 3: display(first);                     break;
             case 4: first = delete_from_front(first);   break;
             case 5: first = delete_from_rear(first);    break;
-            case 6: search(first);                 break;
-            case 8: first = insert_at(first);  break;
-            case 9: first = join_sll(first, second);    break;
+            case 6: search(first);                      break;
+            case 8: first = insert_at(first);           break;
+            case 9: first = delete_at(first);           break;
+            // case 10: first = join_sll(first, second);    break;
             default: return 0;
         }
     }
