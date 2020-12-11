@@ -8,7 +8,7 @@ void enqueue(int queue[], int *front, int *rear, int *count)
 {
     if (*count == MAX)
     {
-        printf("The queue is full! Time for some Dynamic Action ;)\n");
+        printf("The queue is full!\n");
         queue = (int *)realloc(queue, sizeof(int)*MAX*2); // Doubles the size each time it hits the limit.
         
         if (*front > *rear)
