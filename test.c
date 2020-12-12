@@ -1,169 +1,134 @@
-// Linked list skeleton
-
 #include <stdio.h>
 #include <stdlib.h>
 
-struct node
-{
+struct node{
     int info;
-    struct node *link;
+    struct node * link;
 };
-
-typedef struct node *NODE;
-
-NODE getnode();
-NODE insert_into_front_direct(NODE first, int x);
-// NODE insert_into_rear_direct(NODE first, int x);
-// NODE insert_into_front(NODE first);
-// NODE insert_into_rear(NODE first);
-NODE delete_from_front(NODE first);
-// NODE delete_from_rear(NODE first);
-// void search(NODE first);
-int length_sll(NODE first);
-NODE insert_at(NODE first);
-NODE delete_at(NODE first);
-void display(NODE first);
-
-
-int main()
-{
-    NODE first = NULL, second = NULL;
-    int ch = 0;
-    while (1)
-    {
-        printf("\n\n1.Insert@IDX\n2Delete@IDX\n3. Display\n");
-        printf("\nEnter your choice : ");
-        scanf("%d", &ch);
-
-        switch(ch)
-        {
-            case 1: first = insert_at(first);           break;
-            case 2: first = delete_at(first);           break;
-            case 3: display(first);    					break;
-            default: return 0;
-        }
-    }
-    return 0;
-}
-
-//allocate memory
-NODE getnode()
-{
+typedef struct node * NODE;
+NODE getnode(){
     NODE x;
-    x = (NODE)malloc(sizeof(struct node));
-    if (x == NULL)
-    {
-        printf("\nMemory was not allocated !");
-        exit(0);
+    x=(NODE)malloc(sizeof(struct node));
+    if(x==NULL){
+        printf("memory not available");
     }
     return x;
 }
 
-NODE insert_into_front_direct(NODE first, int x)
+NODE insert_front(NODE last,int elem)
 {
-    NODE new = getnode();
-    new->info = x;
-    new->link = first;
-    first = new;
-    return first;
-}
-
-NODE delete_from_front(NODE first)
-{
-    if (first == NULL)
-    {
-        printf("The SLL is empty!\n");
-        return first;
-    }
-    printf("The value deleted is %d\n", first->info);
-    NODE node = first;
-    first = first->link;
-    free(node);
-    return first;
-}
-
-int length_sll(NODE first)
-{
-    int size = 0;
-    NODE curr = first;
-    while(curr != NULL)
-    {
-        size++;
-        curr = curr->link;
-    }
-    return size;
-}
-
-NODE insert_at(NODE first)
-{
-    int x, idx;
-    printf("Enter the value and location respectively : ");
-    scanf("%d %d", &x, &idx);
-
-    int n = length_sll(first);
-    if (idx < 0 || idx > n)
-    {
-        printf("Invalid IDX!\n");
-        return first;
-    }
-
-    NODE node = getnode();
-    node->info = x;
-    node->link = NULL;
-
-    if (idx == 0)
-        return insert_into_front_direct(first, x);
+    NODE temp;
+    temp=getnode();
+    temp->info=elem;
+    if(last==NULL)
+        last=temp;
     else
-    {
-        NODE curr = first;
-        while (--idx)
-            curr = curr->link;
-        node->link = curr->link;
-        curr->link = node;
-    }
-    return first;
+        temp->link=last->link;
+    last->link=temp;
+    return last;
 }
 
-NODE delete_at(NODE first)
+NODE insert_rear(NODE last,int elem)
 {
-    int idx;
-    printf("Enter the location respectively : ");
-    scanf("%d", &idx);
-
-    int n = length_sll(first);
-    if (idx < 0 || idx >= n)
+    NODE temp;
+    temp=getnode();
+    temp->info=elem;
+    if(last==NULL)
     {
-        printf("Invalid IDX!\n");
-        return first;
+        last=temp;
+        temp->link=last;
+        return last;
     }
-
-    if (idx == 0)
-        return delete_from_front(first);
-    
-    NODE curr = first;
-    while (--idx)
-        curr = curr->link;
-
-    NODE node = curr->link;
-    curr->link = node->link;
-    free(node);
-
-    return first;
+    temp->link=last->link;
+    last->link=temp;
+    last=temp;
+    return last;
 }
 
-
-void display(NODE first)
+NODE delete_front(NODE last)
 {
-    if (first == NULL)
+    NODE front;
+    if(last=NULL){
+        printf("list is empty");
+        return NULL;
+    }
+    else if(last->link=last)
     {
-        printf("The LL is empty!\n");
+        printf("the deleted element is %d",last->info);
+        free(last);
+        return NULL;
+    }
+    front=last->link;
+    last->link=front->link;
+    printf("the deleted element is %d",front->info);
+    free(front);
+    return last;
+}
+
+NODE delete_rear(NODE last){
+    if(last==NULL)
+    {
+        printf("there are no elements in CLL\n");
+        return NULL;
+    }
+    else if(last->link==last)
+    {
+        printf("element deleted is %d",last->info);
+        free(last);
+        return NULL;
+    }
+    NODE prev;
+    prev=last->link;
+    while(prev->link!=last)
+        prev=prev->link;
+    printf("element deleted is %d",last->info);
+    prev->link=last->link;
+    free(last);
+    return prev;
+}
+
+void display(NODE last)
+{
+    if(last==NULL){
+        printf("there are no elements in linked list\n");
         return;
     }
-    printf("The LL is : \n");
-    NODE curr = first;
-    while (curr != NULL)
+    NODE cur;
+    cur=last->link;
+    printf("elements of CLL are:\n");
+    while(cur!=last)
     {
-        printf("%d\n", curr->info);
-        curr = curr->link;
+        printf("%d",cur->info);
+        cur=cur->link;
     }
+    printf("%d\n",last->info);
+}
+int main()
+{
+    NODE last;
+    int op,elem;
+    while(1)
+    {
+        printf("enter 1.insert_front\n2.insert_rear\n3.delete_front\n4.delete_rear\n5.display\n");
+        scanf("%d",&op);
+        switch(op)
+        {
+            case 1: printf("enter the element\n");
+                    scanf("%d",&op);
+                    last=insert_front(last,elem);
+                    break;
+            case 2:printf("enter the element\n");
+                    scanf("%d",&elem);
+                    last=insert_rear(last,elem);
+                    break;
+            case 3:last=delete_front(last);
+                    break;
+            case 4:last=delete_rear(last);
+                    break;
+            case 5:display(last);
+        }
+        
+    }
+
+    return 0;
 }
