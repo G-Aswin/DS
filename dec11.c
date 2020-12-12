@@ -20,7 +20,37 @@ void display(NODE last);
 
 int main()
 {
+    NODE last = NULL;
+    int ch, x;
 
+    while (1)
+    {
+        printf("\n1. Insert into front");
+        printf("\n2. Insert into rear");
+        printf("\n3. Delete from front");
+        printf("\n4. Delete from rear");
+        printf("\n5. Display\n\nEnter your choice :");
+        scanf("%d", &ch);
+
+        switch (ch)
+        {
+            case 1: printf("Enter a number to insert : ");
+                    scanf("%d", &x);
+                    last = insert_into_front(last, x);
+                    break;
+            case 2: printf("Enter a number to insert : ");
+                    scanf("%d", &x);
+                    last = insert_into_rear(last, x);
+                    break;
+            case 3: delete_from_front(last);    break;
+            case 4: delete_from_rear(last);     break;
+            case 5: display(last);              break;
+
+            default: return EXIT_SUCCESS;
+        }
+    }
+
+    return EXIT_SUCCESS;
 }
 
 NODE getnode()
