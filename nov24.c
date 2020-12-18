@@ -22,6 +22,7 @@ void search(NODE first);
 int length_sll(NODE first);
 NODE insert_at(NODE first);
 NODE delete_at(NODE first);
+NODE reverse_sll(NODE first);
 void display(NODE first);
 
 
@@ -278,4 +279,18 @@ void display(NODE first)
         printf("%d\n", curr->info);
         curr = curr->link;
     }
+}
+
+NODE reverse_sll(NODE first)
+{
+    NODE sec = NULL;
+    NODE curr = first;
+
+    while(curr != NULL)
+    {
+        sec = insert_into_front_direct(sec, curr->info);
+        curr = curr->link;
+    }
+
+    return sec;
 }
