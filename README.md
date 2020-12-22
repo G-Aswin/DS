@@ -46,3 +46,4 @@
 43. [Circular Linked List CLL](dec11.c)
 44. [Circular LL using Header](dec12.c)
 45. [Polynomial Addition using CSLL-H](dec18.c)
+46. [Doubly Linked List](dec22.c)
