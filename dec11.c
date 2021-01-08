@@ -161,3 +161,16 @@ void display(NODE last)
     }
     printf("%d\n\n", curr->info);
 }
+
+NODE concatenate(NODE last1, NODE last2)
+{
+    NODE curr = last1->link;
+
+    while(curr != last1)
+    {
+        last2 = insert_into_rear(last2, curr->info);
+        curr = curr->link;
+    }
+    last2 = insert_into_rear(last2, curr->info);
+    return last2;
+}
