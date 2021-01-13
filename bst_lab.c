@@ -1,17 +1,3 @@
-// 10. Design, Develop and Implement a menu driven Program in C for the
-// following operations on
-// Binary Search Tree (BST) of Integers .
-
-// a. Create a BST of N Integers: 6, 9, 5, 2, 8, 15, 24, 14, 7, 8, 5, 2
-
-// b. Traverse the BST in Inorder, Preorder and Postorder
-
-// c. Search the BST for a given element (KEY) and report the appropriate
-// message
-
-// d. Exit
-
-
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -117,28 +103,49 @@ void inorder_iterative(NODE root)
 
 void postorder_iterative(NODE root)
 {
-    NODE stack[20], curr;
+    struct stack
+    {
+        NODE address;
+        int flag;
+    };
+    
+    struct stack s[10];
     int top = -1;
 
     if (root == NULL)
-        return;
-
-    curr = root;
-    while(1)
     {
-        while(curr != NULL)
+        printf("The tree is empty!\n");
+        return;
+    }
+
+    NODE curr = root;
+
+    while (1)
+    {
+        // Traversing Left
+        while (curr != NULL)
         {
-            stack[++top] = curr;
+            ++top;
+            s[top].address = curr;
+            s[top].flag = 1;
             curr = curr->left;
         }
-        if (top != -1)
+
+        //If left right both processed, process
+        while(s[top].flag < 0)
         {
-            printf("%d ", stack[top]->info);
-            curr = stack[top--];
-            curr = curr->right;
+            curr = s[top].address;
+            top--;
+            printf("%d ", curr->info);
+
+            if (top == -1)
+                return;
         }
-        else
-            return;
+
+        //Only left processed so process right.
+        curr = s[top].address;
+        curr = curr->right;
+        s[top].flag = -1;
     }
 }
 
@@ -161,20 +168,17 @@ NODE insert(NODE root, NODE new)
 
 
 
-int search(NODE root, int target, int flag)
+NODE search(NODE root, int target)
 {
-    if (root == NULL)
-        return flag;
     
-    if (root->info == target)
-    {
-        printf("\nFound the target");
-        return 1;
-    }
+    if (root == NULL || root->info == target)
+        return root;
+
     else if (target < root->info)
-        return search(root->left, target, flag);
+        return search(root->left, target);
+
     else if (target > root->info)
-        return search(root->right, target, flag); 
+        return search(root->right, target); 
 
 }
 
@@ -205,6 +209,92 @@ void search_iterative(NODE root, int target)
 }   
 
 
+NODE delete(NODE root, int target)
+{
+    if (root == NULL)
+    {
+        printf("The tree is empty!\n");
+        return root;
+    }
+
+    // Get to the target while saving the parent;
+    NODE curr = root, parent = NULL;
+    while(curr != NULL)
+    {
+        if (curr->info == target)
+            break;
+
+        parent = curr;
+        
+        if (target < curr->info)
+            curr = curr->left;
+        else
+            curr = curr->right;
+    }
+
+    if (curr == NULL)
+    {
+        printf("The target is unavailable in this tree\n");
+        return root;
+    }
+
+    if (curr->left == NULL && curr->right == NULL)
+    {
+        if (parent == NULL)
+            return NULL;
+
+        if (parent->left == curr)
+            parent->left = NULL;
+        else
+            parent->right = NULL;
+
+        free(curr);
+        return root;      
+    }
+    
+    NODE successor;
+
+    if (curr ->left == NULL || curr->right == NULL)
+    {
+        if (curr->left == NULL)
+            successor = curr->right;
+        else
+            successor = curr->left;
+
+        if (parent == NULL)
+        {
+            free(curr);
+            return successor;
+        }
+
+        if (parent->left == curr)
+            parent->left = successor;
+        else
+            parent->right = successor;
+
+        free(curr);
+        return root;
+    }
+
+    NODE pos_del = curr, min_parent = curr;
+    curr = curr->right;
+    while(curr->left != NULL)
+    {
+        min_parent = curr;
+        curr = curr->left;
+    }
+
+    successor = curr->right; // can either be right subtree or NULL
+    if (min_parent->left == curr)
+        min_parent->left = successor;
+    else
+        min_parent->right = successor;
+
+    pos_del->info = curr->info;
+    free(curr);
+    return root;
+}
+
 
 
 
@@ -217,7 +307,7 @@ int main()
     while (1)
     {
         printf("\n\n1.Inorder\n2. preorder\n3. postorder\n4. Search\n5. Insert\n\n");
-        printf("6. Preorder Iter\n7. Inorder iter\n8.PostOrder iter\n\n");
+        printf("6. Preorder Iter\n7. Inorder iter\n8.PostOrder iter\n9. Delete\n\n");
         printf("\nEnter your choice : ");
         scanf("%d", &ch);
 
@@ -255,6 +345,11 @@ int main()
                     break;
 
             case 8: postorder_iterative(root);
+                    break;
+
+            case 9: printf("Enter the number to be deleting : ");
+                    scanf("%d", &target);
+                    delete(root, target);
                     break;
 
                     
