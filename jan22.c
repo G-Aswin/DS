@@ -27,6 +27,27 @@ void dfs(int u, int n)
             dfs(i,n);
 }
 
+void dfs_iter(int u, int n)
+{
+    int top = -1, stack[10];
+    stack[++top] = u;
+
+    while (top != -1)
+    {
+        u = stack[top--];
+        if (flag[u] == 0)
+        {
+            printf("%d ", u);
+            flag[u] = 1;
+        }
+        for (int v = n - 1; v >= 0; v--)
+        {
+            if (graph[u][v] == 1 && flag[v] == 0)
+                stack[++top] = v;
+        }
+    }
+}
+
 int main()
 {
     int n;
@@ -39,7 +60,11 @@ int main()
     {
         for (int x = 0; x < n; x++)
             flag[x] = 0;
-        printf("\nThe nodes reacheable from %d is : ", i);
+        printf("\nThe nodes reacheable from %d is (recursive) : ", i);
         dfs(i, n);
+        for (int x = 0; x < n; x++)
+            flag[x] = 0;
+        printf("\nThe nodes reacheable from %d is (iterative) : ", i);
+        dfs_iter(i, n);
     }
 }
