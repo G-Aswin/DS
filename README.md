@@ -48,7 +48,7 @@
 45. [Polynomial Addition using CSLL-H](dec18.c)
 46. [Doubly Linked List](dec22.c)
 47. [BST](bst_lab.c)
-
+48. [DFS recursive](jan22.c)
 
 # Lab Programs
 1. [Menu-driven Array Insertion/Deletion]()
