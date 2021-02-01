@@ -51,4 +51,4 @@
 
 
 # Lab Programs
-1. [Menu-driven Array Insertion/Deletion]()
+1. [Menu-driven Array Insertion/Deletion](lab_1.c)

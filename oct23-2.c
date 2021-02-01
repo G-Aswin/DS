@@ -49,7 +49,7 @@ int main()
     char c;
 
     char str[20];
-    printf("\nEnter the string : ");
+    printf("\nEnter the string : "); // enter the integer
     scanf("%s", str);
 
     for (int i = 0; i < strlen(str); i++)
