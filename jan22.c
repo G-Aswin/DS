@@ -48,6 +48,26 @@ void dfs_iter(int u, int n)
     }
 }
 
+void bfs_iter(int u, int n)
+{
+    int front = 0, rear = -1, queue[20];
+    printf("%d ", u);
+    queue[++rear] = u;
+    flag[u] = 1;
+
+    while(front <= rear)
+    {
+        u = queue[front++];
+        for (int v = 0; v < n; v++)
+            if (graph[u][v] == 1 && flag[v] == 0)
+            {
+                printf("%d ", v);
+                flag[v] = 1;
+                queue[++rear] = v;
+            }
+    }
+}
+
 int main()
 {
     int n;
@@ -62,9 +82,15 @@ int main()
             flag[x] = 0;
         printf("\nThe nodes reacheable from %d is (recursive) : ", i);
         dfs(i, n);
+
         for (int x = 0; x < n; x++)
             flag[x] = 0;
         printf("\nThe nodes reacheable from %d is (iterative) : ", i);
         dfs_iter(i, n);
+
+        for (int x = 0; x < n; x++)
+            flag[x] = 0;
+        printf("\nThe nodes reachable from %d BFS iterative : ", i);
+        bfs_iter(i, n);
     }
 }
