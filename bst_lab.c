@@ -206,94 +206,167 @@ void search_iterative(NODE root, int target)
 
     printf("Element was not found!\n");
     return;
-}   
+}  
 
-
-NODE delete(NODE root, int target)
+NODE delete(NODE root, int item)
 {
-    if (root == NULL)
+    NODE cur=root,parent=NULL,suc,min_par,pos_del;
+    if(cur==NULL)
     {
-        printf("The tree is empty!\n");
+        printf("TREE IS EMPTY!\n");
         return root;
     }
-
-    // Get to the target while saving the parent;
-    NODE curr = root, parent = NULL;
-    while(curr != NULL)
+    while(cur!=NULL)
     {
-        if (curr->info == target)
+        if(item==cur->info)
             break;
-
-        parent = curr;
-        
-        if (target < curr->info)
-            curr = curr->left;
+        parent=cur;
+        if(item<cur->info)
+            cur=cur->left;
         else
-            curr = curr->right;
+            cur=cur->right;
     }
-
-    if (curr == NULL)
+    if(cur->left==NULL && cur->right==NULL)
     {
-        printf("The target is unavailable in this tree\n");
-        return root;
-    }
-
-    if (curr->left == NULL && curr->right == NULL)
-    {
-        if (parent == NULL)
-            return NULL;
-
-        if (parent->left == curr)
-            parent->left = NULL;
-        else
-            parent->right = NULL;
-
-        free(curr);
-        return root;      
-    }
-    
-    NODE successor;
-
-    if (curr ->left == NULL || curr->right == NULL)
-    {
-        if (curr->left == NULL)
-            successor = curr->right;
-        else
-            successor = curr->left;
-
         if (parent == NULL)
         {
-            free(curr);
-            return successor;
+            free(cur);
+            return NULL;
         }
-
-        if (parent->left == curr)
-            parent->left = successor;
+        if(parent->right==cur)
+            parent->right=NULL;
         else
-            parent->right = successor;
-
-        free(curr);
+            parent->left=NULL;
+        printf("Node to be deleted %d",cur->info);
+        free(cur);
         return root;
     }
-
-    NODE pos_del = curr, min_parent = curr;
-    curr = curr->right;
-    while(curr->left != NULL)
+    if(cur->left==NULL || cur->right==NULL)
     {
-        min_parent = curr;
-        curr = curr->left;
+            if(cur->left==NULL)
+                suc=cur->right;
+            else
+                suc=cur->left;
+
+            if (parent == NULL)
+            {
+                free(cur);
+                return suc;
+            }
+
+            if(parent->left==cur)
+                 parent->left=suc;
+            else
+                parent->right=suc;
+        printf("Node to be deleted %d",cur->info);
+        free(cur);
+        return root;
     }
-
-    successor = curr->right; // can either be right subtree or NULL
-    if (min_parent->left == curr)
-        min_parent->left = successor;
-    else
-        min_parent->right = successor;
-
-    pos_del->info = curr->info;
-    free(curr);
+    pos_del=cur;
+    // min_par=cur;
+    cur=cur->right;
+    while(cur->left!=NULL)
+    {
+        // min_par=cur;
+        cur=cur->left;
+    }
+    // suc=cur->right;
+    // if(min_par->left==cur)
+    //     min_par->left=suc;
+    // else
+    //     min_par->right=suc;
+    pos_del->info=cur->info;
+    printf("Node to be deleted %d",pos_del->info);
+    delete(pos_del->right, cur->info);
     return root;
 }
+
+
+// NODE delete(NODE root, int target)
+// {
+//     if (root == NULL)
+//     {
+//         printf("The tree is empty!\n");
+//         return root;
+//     }
+
+//     // Get to the target while saving the parent;
+//     NODE curr = root, parent = NULL;
+//     while(curr != NULL)
+//     {
+//         if (curr->info == target)
+//             break;
+
+//         parent = curr;
+        
+//         if (target < curr->info)
+//             curr = curr->left;
+//         else
+//             curr = curr->right;
+//     }
+
+//     if (curr == NULL)
+//     {
+//         printf("The target is unavailable in this tree\n");
+//         return root;
+//     }
+
+//     if (curr->left == NULL && curr->right == NULL)
+//     {
+//         if (parent == NULL)
+//             return NULL;
+
+//         if (parent->left == curr)
+//             parent->left = NULL;
+//         else
+//             parent->right = NULL;
+
+//         free(curr);
+//         return root;      
+//     }
+    
+//     NODE successor;
+
+//     if (curr ->left == NULL || curr->right == NULL)
+//     {
+//         if (curr->left == NULL)
+//             successor = curr->right;
+//         else
+//             successor = curr->left;
+
+//         if (parent == NULL)
+//         {
+//             free(curr);
+//             return successor;
+//         }
+
+//         if (parent->left == curr)
+//             parent->left = successor;
+//         else
+//             parent->right = successor;
+
+//         free(curr);
+//         return root;
+//     }
+
+//     NODE pos_del = curr, min_parent = curr;
+//     curr = curr->right;
+//     while(curr->left != NULL)
+//     {
+//         min_parent = curr;
+//         curr = curr->left;
+//     }
+
+//     successor = curr->right; // can either be right subtree or NULL
+//     if (min_parent->left == curr)
+//         min_parent->left = successor;
+//     else
+//         min_parent->right = successor;
+
+//     pos_del->info = curr->info;
+//     free(curr);
+//     return root;
+// }
 
 
 
